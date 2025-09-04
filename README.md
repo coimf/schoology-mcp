@@ -1,12 +1,8 @@
 # Schoology MCP Server
 
----
-
 Provide LLMs with your courses and upcoming assignments from Schoology.
 
 ## Installation
-
----
 
 Since there is no official Schoology API, we use a cookie-based approach to fetch the data from endpoints.
 
@@ -24,15 +20,15 @@ To get your cookie, follow these steps:
 **Upcoming Assignments**
 1. Open developer tools.
 2. Go to the `Network` tab and reload the page as necessary.
-3. Find the `upcoming_submissions_ajax` request and copy the URL (right-click -> copy value -> copy URL).
+3. Find the `upcoming_submissions_ajax` request and copy the URL (right-click > copy value > copy URL).
 
 **Courses**
 1. Open developer tools.
 2. Go to the `Network` tab and reload the page as necessary.
 3. Click the courses dropdown in Schoology to load your courses.
-3. Find the `courses` request and copy the URL (right-click -> copy value -> copy URL).
+3. Find the `courses` request and copy the URL (right-click > copy value > copy URL).
 
-Now, add the following to the configuration file in your MCP client of choice, replacing `<your_schoology_cookie>`, `<upcoming_submissions_ajax>`, and `<courses_endpoint>` with the values you copied from the previous steps.
+Now, clone the repository and add the following to the configuration file in your MCP client of choice, replacing `<your_schoology_cookie>`, `<upcoming_submissions_ajax>`, and `<courses_endpoint>` with the values you copied from the previous steps and the path to the repo.
 ```json
 {
   "mcpServers": {
@@ -55,8 +51,6 @@ Now, add the following to the configuration file in your MCP client of choice, r
 ```
 
 ## Tools
-
----
 
 1. `get_current_date`
 - Returns the current date and time in the format YYYY-MM-DD HH:MM:SS.
