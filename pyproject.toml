@@ -1,0 +1,11 @@
+[project]
+name = "schoology-mcp"
+version = "0.1.0"
+description = "Access Schoology assignments and courses"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "beautifulsoup4>=4.13.5",
+    "mcp[cli]>=1.13.1",
+    "requests>=2.32.5",
+]
