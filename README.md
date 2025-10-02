@@ -12,7 +12,7 @@ Provide LLMs with your courses and upcoming assignments from Schoology.
 > [!NOTE]
 > You must be signed in to Schoology in your browser to use Schoology MCP.
 
-Add the following to the configuration file in your MCP client of choice, replacing `<YOUR-SCHOOL-DISTRICT>.schoology.com` with your school's Schoology page URL. For example, the "Dump Truck Union High School District" might have a base url of `dtuhsd.schoology.com`.
+Add the following to the configuration file in your MCP client of choice. Replace `<YOUR-SCHOOL-DISTRICT>.schoology.com` with your Schoology page URL and `PATH/TO/schoology-mcp` with where you cloned this repository. For example, the "Dump Truck Union High School District" might have a base url of `dtuhsd.schoology.com`.
 
 ```json
 {
