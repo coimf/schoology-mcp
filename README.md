@@ -37,13 +37,10 @@ Add the following to the configuration file in your MCP client of choice, replac
 
 ---
 
-1. `get_current_date`
-- Returns the current date and time in the format YYYY-MM-DD HH:MM:SS.
-
-2. `get_enrolled_courses`
+1. `get_enrolled_courses`
 - Fetch a list of courses the user is enrolled in from Schoology.
 - Returns a list of dictionaries containing course information.
 
-3. `get_upcoming_assignments`
+2. `get_upcoming_assignments`
 - Fetch a list of upcoming assignments from Schoology.
 - Returns a list of dictionaries containing assignment information.

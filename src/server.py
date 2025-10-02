@@ -15,8 +15,7 @@ from contextlib import asynccontextmanager
 from collections.abc import AsyncIterator
 
 logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
 
@@ -38,10 +37,14 @@ class SchoologyConfig:
     def __init__(self):
         self.base_url = os.environ.get("SCHOOLOGY_BASE_URL")
         if self.base_url is None:
-            raise Exception("Please set the SCHOOLOGY_BASE_URL environment variable to <your-school-district>.schoology.com")
+            raise Exception(
+                "Please set the SCHOOLOGY_BASE_URL environment variable to <your-school-district>.schoology.com"
+            )
         self.session = self._create_requests_session(self.base_url, browser="chrome")
         if self.session is None:
-            raise Exception("Failed to authenticate. Try signing into Schoology in your browser again.")
+            raise Exception(
+                "Failed to authenticate. Try signing into Schoology in your browser again."
+            )
         self.headers = {
             "accept": "application/json, text/javascript, */*; q=0.01",
             "accept-language": "en,en-US;q=0.9",
@@ -56,7 +59,9 @@ class SchoologyConfig:
             "Connection": "keep-alive",
         }
 
-    def _load_browser_cookies(self, domain: str, browser: str = "chrome") -> Optional[CookieJar]:
+    def _load_browser_cookies(
+        self, domain: str, browser: str = "chrome"
+    ) -> Optional[CookieJar]:
         """
         Load cookies for domain from the browser.
 
@@ -76,14 +81,18 @@ class SchoologyConfig:
 
         return cj
 
-    def _create_requests_session(self, domain: str, browser: str = "chrome") -> requests.Session:
+    def _create_requests_session(
+        self, domain: str, browser: str = "chrome"
+    ) -> requests.Session:
         """
         Create a requests.Session preloaded with cookies for the domain.
         """
         session = requests.Session()
         cj = self._load_browser_cookies(domain=domain, browser=browser)
         if cj is None:
-            raise Exception("Failed to load cookies. Try signing into Schoology in your browser again.")
+            raise Exception(
+                "Failed to load cookies. Try signing into Schoology in your browser again."
+            )
 
         cookie_dict = {}
         for c in cj:
@@ -104,8 +113,10 @@ def _extract_assignments(response_json: dict) -> list[dict]:
     Returns:
         List of assignment dictionaries with title, due date, and class
     """
-    if not isinstance(response_json, dict) or 'html' not in response_json:
-        raise ValueError(f"Invalid response format: {response_json}\nmissing 'html' field")
+    if not isinstance(response_json, dict) or "html" not in response_json:
+        raise ValueError(
+            f"Invalid response format: {response_json}\nmissing 'html' field"
+        )
 
     html = response_json.get("html", "")
     if not html:
@@ -133,21 +144,10 @@ def _extract_assignments(response_json: dict) -> list[dict]:
         except ValueError:
             due_dt = None
 
-        assignments.append({
-            "title": title,
-            "due": due_dt,
-            "class": course
-        })
+        assignments.append({"title": title, "due": due_dt, "class": course})
 
     assignments.sort(key=lambda x: x["due"] or datetime.max)
     return assignments
-
-@mcp.tool()
-def get_current_date() -> str:
-    """
-    Returns the current date and time in the format YYYY-MM-DD HH:MM:SS.
-    """
-    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 @mcp.tool()
 def get_enrolled_courses() -> list[dict]:
@@ -159,7 +159,7 @@ def get_enrolled_courses() -> list[dict]:
         r = config.session.get(url, headers=config.headers)
         data = r.json()
         keep_keys = ["courseTitle", "sectionTitle"]
-        courses = data.get('data', {}).get('courses', [])
+        courses = data.get("data", {}).get("courses", [])
 
         return [{k: c.get(k) for k in keep_keys} for c in courses]
     except requests.exceptions.RequestException as e:
@@ -179,9 +179,13 @@ def get_upcoming_assignments() -> list[dict]:
     try:
         r = r.json()
     except json.JSONDecodeError:
-        return [{0: "Failed to decode response. Try signing into Schoology in your browser again."}]
+        return [
+            {
+                0: "Failed to decode response. Try signing into Schoology in your browser again."
+            }
+        ]
 
     return _extract_assignments(r)
 
 if __name__ == "__main__":
-    mcp.run(transport='stdio')
+    mcp.run(transport="stdio")
