@@ -1,4 +1,5 @@
 # Schoology MCP Server
+[![MCP Badge](https://lobehub.com/badge/mcp/coimf-schoology-mcp?style=flat)](https://lobehub.com/mcp/coimf-schoology-mcp)
 
 ---
 
